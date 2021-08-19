@@ -14,4 +14,13 @@ class Validator
     # was provided for you. Don't be hesistant to extract new objects (and
     # write tests for them).
   end
+
+  def self.validate_row(row)
+    if row.uniq.length == row.length
+      true
+    else
+      false
+    end
+  end
+
 end
