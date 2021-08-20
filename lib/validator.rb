@@ -8,10 +8,14 @@ class Validator
   end
 
   def validate
-    if is_complete?
-      "This sudoku is valid."
+    if is_valid?
+      if is_complete?
+        "This sudoku is valid."
+      else
+        "This sudoku is valid, but incomplete."
+      end
     else
-      "This sudoku is valid, but incomplete."
+      "This sudoku is invalid."
     end
   end
 
@@ -21,6 +25,17 @@ class Validator
     else
       false
     end
+  end
+
+  def is_valid?
+    # all rows valid AND all columns valid AND all subgroups valid
+    true
+    # TODO: Work out how to split puzzle_string into rows and check for a row duplicate
+    # @puzzle_string -> rows -> each row -> validate_row(row)
+    # rows = ??
+    #rows.each do |row|
+    #  validate_row(row)
+    # end
   end
 
   def self.validate_row(row)
