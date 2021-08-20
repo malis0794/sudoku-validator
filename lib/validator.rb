@@ -8,11 +8,19 @@ class Validator
   end
 
   def validate
-    # Start creating your solution here.
-    #
-    # It's likely that you'll want to have many more classes than this one that
-    # was provided for you. Don't be hesistant to extract new objects (and
-    # write tests for them).
+    if is_complete?
+      "This sudoku is valid."
+    else
+      "This sudoku is valid, but incomplete."
+    end
+  end
+
+  def is_complete?
+    unless @puzzle_string.include? "0"
+      true
+    else
+      false
+    end
   end
 
   def self.validate_row(row)
