@@ -1,3 +1,5 @@
+require "pry"
+
 class Validator
   def initialize(puzzle_string)
     @puzzle_string = puzzle_string
@@ -28,30 +30,23 @@ class Validator
   end
 
   def is_valid?
-    true
-    # all rows valid AND all columns valid AND all subgroups valid
-    # TODO: Work out how to split puzzle_string into rows and check for a row duplicate
-    # @puzzle_string -> rows -> each row -> validate_row(row)
-    # rows = ??
-    #rows.each do |row|
-    #  validate_row(row)
-    # end
+    rows_valid?
   end
 
   def rows()
-    rows = @puzzle_string.tr('+|-', '').split("\n") # gets rid of special characters
-    rows.reject! {|string| string.empty?} # rids empty strings
+    rows = @puzzle_string.tr('+|-', '').split("\n")
+    rows.reject! {|string| string.empty?}
     rows.map! {|row| row.split(" ")}
     rows.map! {|row| row.map {|sub| sub.to_i}}
   end
 
+  private 
 
-  def self.validate_row(row)
-    if row.uniq.length == row.length
-      true
-    else
-      false
-    end
+  def rows_valid?
+    rows.none? {|row| contains_duplicates?(row) }
   end
 
+  def contains_duplicates?(row)
+    row.uniq.length != row.length
+  end
 end
