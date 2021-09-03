@@ -30,7 +30,7 @@ class Validator
   end
 
   def is_valid?
-    rows_valid?
+    rows_valid? && columns_valid? 
   end
 
   def rows()
@@ -40,10 +40,18 @@ class Validator
     rows.map! {|row| row.map {|sub| sub.to_i}}
   end
 
+  def columns()
+    rows.transpose
+  end
+
   private 
 
   def rows_valid?
     rows.none? {|row| contains_duplicates?(row) }
+  end
+
+  def columns_valid?
+    columns.none? {|column| contains_duplicates?(column) } 
   end
 
   def contains_duplicates?(row)

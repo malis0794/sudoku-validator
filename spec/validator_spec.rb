@@ -44,6 +44,14 @@ describe Validator do
         expect(validator.is_valid?).to eq false
       end
     end
+
+    context 'when it contains a column duplicate' do
+      it 'returns false' do
+        file = File.read("spec/fixtures/invalid_due_to_column_dupe.sudoku")
+        validator = Validator.new(file)
+        expect(validator.is_valid?).to eq false
+      end
+    end
   end
 
   describe '#rows' do
@@ -62,6 +70,25 @@ describe Validator do
         [5, 9, 8, 7, 3, 6, 2, 4, 1]
       ]
       expect(validator.rows).to match_array(expected_array) # match our example array
+    end
+  end
+
+  describe '#columns' do
+    it 'returns array of columns' do
+      file = File.read("spec/fixtures/valid_complete.sudoku")
+      validator = Validator.new(file)
+      expected_array = [
+        [8, 7, 1, 9, 3, 2, 4, 6, 5],
+        [5, 2, 6, 8, 7, 4, 3, 1, 9],
+        [9, 3, 4, 6, 5, 1, 2, 7, 8],
+        [6, 8, 3, 1, 2, 5, 9, 4, 7],
+        [1, 5, 7, 4, 6, 9, 8, 2, 3],
+        [2, 4, 9, 7, 8, 3, 1, 5, 6],
+        [4, 1, 5, 3, 9, 7, 6, 8, 2],
+        [3, 6, 2, 5, 1, 8, 7, 9, 4],
+        [7, 9, 8, 2, 4, 6, 5, 3, 1]
+      ]
+      expect(validator.columns).to match_array(expected_array)
     end
   end
 
