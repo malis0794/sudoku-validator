@@ -52,7 +52,16 @@ describe Validator do
         expect(validator.is_valid?).to eq false
       end
     end
+
+    context 'when it contains a subgroup duplicate' do
+      it 'returns false' do
+        file = File.read("spec/fixtures/invalid_due_to_subgroup_dupe.sudoku")
+        validator = Validator.new(file)
+        expect(validator.is_valid?).to eq false
+      end
+    end
   end
+
 
   describe '#rows' do
     it 'returns array of rows' do
@@ -92,26 +101,22 @@ describe Validator do
     end
   end
 
-  describe '#validate_row' do
-    context 'when it is valid' do
-      it 'returns true' do
-        row = [8, 5, 9, 6, 1, 2, 4, 3, 7]
-        expect(Validator.validate_row(row)).to eq true
-      end
-    end
-
-    context 'when it is valid but incomplete' do
-      it 'returns true' do
-        row = [0, 5, 9, 6, 1, 2, 4, 3, 7]
-        expect(Validator.validate_row(row)).to eq true
-      end
-    end
-
-    context 'when it contains duplicates' do
-      it 'returns false' do
-        row = [8, 8, 0, 0, 0, 2, 4, 0, 0]
-        expect(Validator.validate_row(row)).to eq false
-      end
+  describe '#subgroups' do
+    it 'returns array of subgroups' do
+      file = File.read("spec/fixtures/valid_incomplete.sudoku")
+      validator = Validator.new(file)
+      expected_array = [
+        [8, 5, 0, 7, 2, 0, 0, 0, 4],
+        [0, 0, 2, 0, 0, 0, 0, 0, 0],
+        [4, 0, 0, 0, 0, 9, 0, 0, 0],
+        [0, 0, 0, 3, 0, 5, 0, 4, 0],
+        [1, 0, 7, 0, 0, 0, 0, 0, 0],
+        [0, 0, 2, 9, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 7, 0, 0, 0],
+        [0, 8, 0, 0, 0, 0, 0, 3, 6],
+        [0, 7, 0, 0, 0, 0, 0, 4, 0]
+      ]
+      expect(validator.subgroups).to eq(expected_array)
     end
   end
   
