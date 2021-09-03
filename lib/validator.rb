@@ -47,6 +47,7 @@ class Validator
   end
 
   def contains_duplicates?(row)
-    row.uniq.length != row.length
+    row_without_incomplete_squares = row.reject { |item| item == 0 }
+    row_without_incomplete_squares.uniq.length != row_without_incomplete_squares.length
   end
 end
