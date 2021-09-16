@@ -1,5 +1,3 @@
-require "pry"
-
 class Validator
   def initialize(puzzle_string)
     @puzzle_string = puzzle_string
